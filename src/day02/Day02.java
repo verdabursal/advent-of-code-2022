@@ -49,7 +49,7 @@ public class Day02 {
 				if (result == 0) { // lose
 					score += (opponent + 2) % 3 + 1;
 				} else if (result == 1) { // draw
-					score += (opponent - 1) % 3 + 5;
+					score += opponent % 3 + 4;
 				} else { // win
 					score += (opponent + 1) % 3 + 7;
 				}
