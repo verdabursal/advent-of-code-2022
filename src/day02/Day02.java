@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Day02 {
-	String filepath = "src/day02/day02data.txt";
+	String filepath = "src/day02/data.txt";
 
 	String abc = "ABC";
 	String xyz = "XYZ";

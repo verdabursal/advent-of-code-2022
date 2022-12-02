@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Day01 {
-	String filepath = "src/day01/day01data.txt";
+	String filepath = "src/day01/data.txt";
 
 	public int solvePuzzle1() {
 		List<Integer> calorieCounts = findCalorieCounts();
