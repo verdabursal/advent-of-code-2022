@@ -17,12 +17,13 @@ public class Day04 {
 				String[] assns = currentLine.split(",");
 				String[] firstAssn = assns[0].split("-");
 				String[] secondAssn = assns[1].split("-");
-				if ((Integer.parseInt(firstAssn[0]) <= Integer.parseInt(secondAssn[0])
-					&& Integer.parseInt(firstAssn[1]) >= Integer.parseInt(secondAssn[1]))
-					||
-					(Integer.parseInt(firstAssn[1]) <= Integer.parseInt(secondAssn[1])
-						&& Integer.parseInt(firstAssn[0]) >= Integer.parseInt(secondAssn[0]))
-				) {
+				int firstLow = Integer.parseInt(firstAssn[0]);
+				int firstHigh = Integer.parseInt(firstAssn[1]);
+				int secondLow = Integer.parseInt(secondAssn[0]);
+				int secondHigh = Integer.parseInt(secondAssn[1]);
+
+				if ((firstLow <= secondLow && firstHigh >= secondHigh)
+					|| (firstHigh <= secondHigh && firstLow >= secondLow)) {
 					count++;
 				}
 			}
@@ -43,24 +44,17 @@ public class Day04 {
 				String[] assns = currentLine.split(",");
 				String[] firstAssn = assns[0].split("-");
 				String[] secondAssn = assns[1].split("-");
-				if ((Integer.parseInt(firstAssn[0]) <= Integer.parseInt(secondAssn[0])
-					&& Integer.parseInt(firstAssn[1]) >= Integer.parseInt(secondAssn[0]))
-					||
-					(Integer.parseInt(firstAssn[0]) <= Integer.parseInt(secondAssn[1])
-						&& Integer.parseInt(firstAssn[1]) >= Integer.parseInt(secondAssn[1]))
-					||
-					(Integer.parseInt(firstAssn[1]) <= Integer.parseInt(secondAssn[1])
-						&& Integer.parseInt(firstAssn[0]) >= Integer.parseInt(secondAssn[1]))
-					||
-					(Integer.parseInt(firstAssn[1]) <= Integer.parseInt(secondAssn[0])
-						&& Integer.parseInt(firstAssn[0]) >= Integer.parseInt(secondAssn[0]))
-					||
-					(Integer.parseInt(firstAssn[0]) <= Integer.parseInt(secondAssn[0])
-						&& Integer.parseInt(firstAssn[1]) >= Integer.parseInt(secondAssn[1]))
-					||
-					(Integer.parseInt(firstAssn[1]) <= Integer.parseInt(secondAssn[1])
-						&& Integer.parseInt(firstAssn[0]) >= Integer.parseInt(secondAssn[0]))
-				) {
+				int firstLow = Integer.parseInt(firstAssn[0]);
+				int firstHigh = Integer.parseInt(firstAssn[1]);
+				int secondLow = Integer.parseInt(secondAssn[0]);
+				int secondHigh = Integer.parseInt(secondAssn[1]);
+
+				if ((firstLow <= secondLow && firstHigh >= secondLow)
+					|| (firstLow <= secondHigh && firstHigh >= secondHigh)
+					|| (firstHigh <= secondHigh && firstLow >= secondHigh)
+					|| (firstHigh <= secondLow && firstLow >= secondLow)
+					|| (firstLow <= secondLow && firstHigh >= secondHigh)
+					|| (firstHigh <= secondHigh && firstLow >= secondLow)) {
 					count++;
 				}
 			}
