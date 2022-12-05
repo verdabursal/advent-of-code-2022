@@ -14,9 +14,8 @@ public class Day05 {
 
 	public String solvePuzzle1() {
 		StringBuilder finalMessage = new StringBuilder();
-
-		List<int[]> amountFromTo = new ArrayList<>();
 		char[][] startingState = new char[rows][cols];
+		List<int[]> steps = new ArrayList<>();
 
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(filepath));
@@ -24,10 +23,8 @@ public class Day05 {
 			int idx = 0;
 
 			while ((currentLine = br.readLine()) != null) {
-				if (idx < rows) {
-					// add to the starting state
+				if (idx < rows) { // add to the starting state
 					char[] row = new char[cols];
-
 					for (int i = 0; i < cols; i++) {
 						if (currentLine.length() > i * 4 + 1) {
 							char charAt = currentLine.charAt(i * 4 + 1);
@@ -36,16 +33,14 @@ public class Day05 {
 							}
 						}
 					}
-
 					startingState[idx] = row;
-				} else if (idx > rows + 1) {
-					// add to the steps
+				} else if (idx > rows + 1) { // add to the steps
 					String[] strings = currentLine.split(" ");
 					int[] amtFromTo = new int[3];
 					amtFromTo[0] = Integer.parseInt(strings[1]);
 					amtFromTo[1] = Integer.parseInt(strings[3]);
 					amtFromTo[2] = Integer.parseInt(strings[5]);
-					amountFromTo.add(amtFromTo);
+					steps.add(amtFromTo);
 				}
 
 				idx++;
@@ -54,7 +49,7 @@ public class Day05 {
 			e.printStackTrace();
 		}
 
-		// revamp starting state -- read the rows/columns into stacks representing each column
+		// translate starting state into stacks representing columns
 		Stack<Character>[] columns = new Stack[cols];
 		for (int i = 0; i < cols; i++) {
 			columns[i] = new Stack<Character>();
@@ -68,11 +63,14 @@ public class Day05 {
 			}
 		}
 
-		// go thru list of steps ("amountFromTo") and perform them all
-		for (int[] arr : amountFromTo) {
-			for (int a = 0; a < arr[0]; a++) { // amount
-				char c = columns[arr[1] - 1].pop(); // from
-				columns[arr[2] - 1].push(c); // to
+		// go thru list of steps and perform them all
+		for (int[] step : steps) {
+			int amount = step[0];
+			int from = step[1] - 1;
+			int to = step[2] - 1;
+
+			for (int i = 0; i < amount; i++) {
+				columns[to].push(columns[from].pop());
 			}
 		}
 
@@ -86,9 +84,8 @@ public class Day05 {
 
 	public String solvePuzzle2() {
 		StringBuilder finalMessage = new StringBuilder();
-
-		List<int[]> amountFromTo = new ArrayList<>();
 		char[][] startingState = new char[rows][cols];
+		List<int[]> steps = new ArrayList<>();
 
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(filepath));
@@ -96,10 +93,8 @@ public class Day05 {
 			int idx = 0;
 
 			while ((currentLine = br.readLine()) != null) {
-				if (idx < rows) {
-					// add to the starting state
+				if (idx < rows) { // add to the starting state
 					char[] row = new char[cols];
-
 					for (int i = 0; i < cols; i++) {
 						if (currentLine.length() > i * 4 + 1) {
 							char charAt = currentLine.charAt(i * 4 + 1);
@@ -108,16 +103,14 @@ public class Day05 {
 							}
 						}
 					}
-
 					startingState[idx] = row;
-				} else if (idx > rows + 1) {
-					// add to the steps
+				} else if (idx > rows + 1) { // add to the steps
 					String[] strings = currentLine.split(" ");
 					int[] amtFromTo = new int[3];
 					amtFromTo[0] = Integer.parseInt(strings[1]);
 					amtFromTo[1] = Integer.parseInt(strings[3]);
 					amtFromTo[2] = Integer.parseInt(strings[5]);
-					amountFromTo.add(amtFromTo);
+					steps.add(amtFromTo);
 				}
 
 				idx++;
@@ -126,7 +119,7 @@ public class Day05 {
 			e.printStackTrace();
 		}
 
-		// revamp starting state -- read the rows/columns into stacks representing each column
+		// translate starting state into stacks representing columns
 		Stack<Character>[] columns = new Stack[cols];
 		for (int i = 0; i < cols; i++) {
 			columns[i] = new Stack<Character>();
@@ -140,16 +133,19 @@ public class Day05 {
 			}
 		}
 
-		// go thru list of steps ("amountFromTo") and perform them all
-		for (int[] arr : amountFromTo) {
-			Stack<Character> temp = new Stack<>();
-			for (int a = 0; a < arr[0]; a++) { // amount
-				char c = columns[arr[1] - 1].pop(); // from
-				temp.push(c);
+		// go thru list of steps and perform them all
+		for (int[] step : steps) {
+			Stack<Character> helperStack = new Stack<>();
+			int amount = step[0];
+			int from = step[1] - 1;
+			int to = step[2] - 1;
+
+			for (int i = 0; i < amount; i++) {
+				helperStack.push(columns[from].pop());
 			}
 
-			for (int i = 0; i < arr[0]; i++) {
-				columns[arr[2] - 1].push(temp.pop()); // to
+			for (int i = 0; i < amount; i++) {
+				columns[to].push(helperStack.pop());
 			}
 		}
 
