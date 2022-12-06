@@ -38,11 +38,11 @@ public class Day06 {
 				ll.offer(input.charAt(i));
 			}
 		}
-		if (allDistinct(ll, sequenceSize)) return sequenceSize;
+		if (distinctSequence(ll, sequenceSize)) return sequenceSize;
 
 		// move the queue forward along input; if distinct sequence, return
 		for (int i = sequenceSize; i < input.length(); i++) {
-			if (allDistinct(ll, sequenceSize)) {
+			if (distinctSequence(ll, sequenceSize)) {
 				return i;
 			} else {
 				ll.poll();
@@ -54,7 +54,7 @@ public class Day06 {
 		return input.length();
 	}
 
-	private boolean allDistinct(LinkedList<Character> charList, int sequenceSize) {
+	private boolean distinctSequence(LinkedList<Character> charList, int sequenceSize) {
 		Set<Character> charSet = new HashSet<>(charList);
 		return charSet.size() == sequenceSize;
 	}
