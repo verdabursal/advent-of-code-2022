@@ -31,15 +31,16 @@ public class Day06 {
 			e.printStackTrace();
 		}
 
+		// set up initial queue
 		LinkedList<Character> ll = new LinkedList<>();
 		if (input.length() >= sequenceSize) {
 			for (int i = 0; i < sequenceSize; i++) {
 				ll.offer(input.charAt(i));
 			}
 		}
-
 		if (allDistinct(ll, sequenceSize)) return sequenceSize;
 
+		// move the queue forward along input; if distinct sequence, return
 		for (int i = sequenceSize; i < input.length(); i++) {
 			if (allDistinct(ll, sequenceSize)) {
 				return i;
@@ -49,6 +50,7 @@ public class Day06 {
 			}
 		}
 
+		// we have exhausted the whole input and still not found a distinct sequence
 		return input.length();
 	}
 
