@@ -1,4 +1,3 @@
-import day06.Day06;
 import day07.Day07;
 
 public class Main {
