@@ -1,7 +1,7 @@
-import day07.Day07;
+import day08.Day08;
 
 public class Main {
 	public static void main(String[] args) {
-		System.out.println(new Day07().solvePuzzle2());
+		System.out.println(new Day08().solvePuzzle2());
 	}
 }
