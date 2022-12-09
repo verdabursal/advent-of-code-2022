@@ -10,76 +10,20 @@ public class Day09 {
 	String filepath = "src/day09/data.txt";
 
 	public int solvePuzzle1() {
-		Duple s = new Duple(0, 0);
-		Duple h = new Duple(0, 0);
-		Duple t = new Duple(0, 0);
-		Set<Duple> tVisited = new HashSet<>();
-		tVisited.add(s);
-
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(filepath));
-			String currentLine;
-			while ((currentLine = br.readLine()) != null) {
-				String[] splitStr = currentLine.split(" ");
-				String direction = splitStr[0];
-				int amount = Integer.parseInt(splitStr[1]);
-				for (int i = 0; i < amount; i++) {
-					// move head
-					switch (direction) {
-						case "U":
-							h.second++;
-							break;
-						case "R":
-							h.first++;
-							break;
-						case "D":
-							h.second--;
-							break;
-						case "L":
-							h.first--;
-							break;
-					}
-					// move tail
-					// don't move if they are adjacent including diagonally or atop
-					if (h.first - t.first >= 1 && h.second - t.second >= 1
-						&& (h.first - t.first > 1 || h.second - t.second > 1)) {
-						t.first++;
-						t.second++;
-					} else if (t.first - h.first >= 1 && h.second - t.second >= 1
-						&& (t.first - h.first > 1 || h.second - t.second > 1)) {
-						t.first--;
-						t.second++;
-					} else if (h.first - t.first >= 1 && t.second - h.second >= 1
-						&& (h.first - t.first > 1 || t.second - h.second > 1)) {
-						t.first++;
-						t.second--;
-					} else if (t.first - h.first >= 1 && t.second - h.second >= 1
-						&& (t.first - h.first > 1 || t.second - h.second > 1)) {
-						t.first--;
-						t.second--;
-					} else if (Math.abs(h.first - t.first) > 1) {
-						t.first = (h.first + t.first) / 2;
-					} else if (Math.abs(h.second - t.second) > 1) {
-						t.second = (h.second + t.second) / 2;
-					}
-					tVisited.add(t.copy());
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return tVisited.size();
+		return solveHelper(2);
 	}
 
 	public int solvePuzzle2() {
-		Duple s = new Duple(0, 0);
-		Duple[] knots = new Duple[10];
-		Set<Duple> tVisited = new HashSet<>();
-		tVisited.add(s);
-		for (int i = 0; i < 10; i++) {
+		return solveHelper(10);
+	}
+
+	public int solveHelper(int knotCount) {
+		Duple[] knots = new Duple[knotCount];
+		for (int i = 0; i < knotCount; i++) {
 			knots[i] = (new Duple(0, 0));
 		}
+		Set<Duple> tVisited = new HashSet<>();
+		tVisited.add(new Duple(0, 0));
 
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(filepath));
@@ -104,34 +48,37 @@ public class Day09 {
 							knots[0].first--;
 							break;
 					}
+
 					// move tails
 					// don't move if they are adjacent including diagonally or atop
-					for (int j = 1; j < 10; j++) {
+					for (int j = 1; j < knotCount; j++) {
 						Duple former = knots[j - 1];
 						Duple current = knots[j];
-						if (former.first - current.first >= 1 && former.second - current.second >= 1
-							&& (former.first - current.first > 1 || former.second - current.second > 1)) {
+						int fx = former.first;
+						int fy = former.second;
+						int x = current.first;
+						int y = current.second;
+
+						if (fx - x >= 1 && fy - y >= 1 && (fx - x > 1 || fy - y > 1)) {
 							current.first++;
 							current.second++;
-						} else if (current.first - former.first >= 1 && former.second - current.second >= 1
-							&& (current.first - former.first > 1 || former.second - current.second > 1)) {
+						} else if (x - fx >= 1 && fy - y >= 1 && (x - fx > 1 || fy - y > 1)) {
 							current.first--;
 							current.second++;
-						} else if (former.first - current.first >= 1 && current.second - former.second >= 1
-							&& (former.first - current.first > 1 || current.second - former.second > 1)) {
+						} else if (fx - x >= 1 && y - fy >= 1 && (fx - x > 1 || y - fy > 1)) {
 							current.first++;
 							current.second--;
-						} else if (current.first - former.first >= 1 && current.second - former.second >= 1
-							&& (current.first - former.first > 1 || current.second - former.second > 1)) {
+						} else if (x - fx >= 1 && y - fy >= 1 && (x - fx > 1 || y - fy > 1)) {
 							current.first--;
 							current.second--;
-						} else if (Math.abs(former.first - current.first) > 1) {
-							current.first = (former.first + current.first) / 2;
-						} else if (Math.abs(former.second - current.second) > 1) {
-							current.second = (former.second + current.second) / 2;
+						} else if (Math.abs(fx - x) > 1) {
+							current.first = (fx + x) / 2;
+						} else if (Math.abs(fy - y) > 1) {
+							current.second = (fy + y) / 2;
 						}
 					}
-					tVisited.add(knots[9].copy());
+
+					tVisited.add(knots[knotCount - 1].copy());
 				}
 			}
 		} catch (IOException e) {
