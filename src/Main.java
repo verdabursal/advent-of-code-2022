@@ -1,7 +1,7 @@
-import day10.Day10;
+import day11.Day11;
 
 public class Main {
 	public static void main(String[] args) {
-		System.out.println(new Day10().solvePuzzle2());
+		System.out.println(new Day11().solvePuzzle2());
 	}
 }
