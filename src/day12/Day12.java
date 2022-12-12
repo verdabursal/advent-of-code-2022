@@ -46,40 +46,40 @@ public class Day12 {
 
 		// transform matrix into a graph
 		Graph graph = new Graph();
-		List<List<Node>> tempNodes = new ArrayList<>();
+		Set<Node> nodes = new HashSet<>();
+		List<List<Node>> nodesMatrix = new ArrayList<>();
 		for (int i = 0; i < matrix.size(); i++) {
-			List<Node> tempNodesRow = new ArrayList<>();
+			List<Node> nodesMatrixRow = new ArrayList<>();
 			for (int j = 0; j < matrix.get(0).size(); j++) {
 				Node node = new Node(i + "," + j);
-				tempNodesRow.add(node);
+				nodesMatrixRow.add(node);
 			}
-			tempNodes.add(tempNodesRow);
+			nodesMatrix.add(nodesMatrixRow);
 		}
-		Set<Node> nodes = new HashSet<>();
+
+		// assemble adjacencies
 		for (int i = 0; i < matrix.size(); i++) {
 			for (int j = 0; j < matrix.get(0).size(); j++) {
-				Node node = tempNodes.get(i).get(j);
+				Node node = nodesMatrix.get(i).get(j);
 				if (i > 0 && matrix.get(i - 1).get(j) - matrix.get(i).get(j) <= 1) {
-					node.getAdjacentNodes().put(tempNodes.get(i - 1).get(j), 1);
+					node.getAdjacentNodes().put(nodesMatrix.get(i - 1).get(j), 1);
 				}
 				if (j > 0 && matrix.get(i).get(j - 1) - matrix.get(i).get(j) <= 1) {
-					node.getAdjacentNodes().put(tempNodes.get(i).get(j - 1), 1);
+					node.getAdjacentNodes().put(nodesMatrix.get(i).get(j - 1), 1);
 				}
 				if (i < matrix.size() - 1 && matrix.get(i + 1).get(j) - matrix.get(i).get(j) <= 1) {
-					node.getAdjacentNodes().put(tempNodes.get(i + 1).get(j), 1);
+					node.getAdjacentNodes().put(nodesMatrix.get(i + 1).get(j), 1);
 				}
 				if (j < matrix.get(0).size() - 1 && matrix.get(i).get(j + 1) - matrix.get(i).get(j) <= 1) {
-					node.getAdjacentNodes().put(tempNodes.get(i).get(j + 1), 1);
+					node.getAdjacentNodes().put(nodesMatrix.get(i).get(j + 1), 1);
 				}
 				nodes.add(node);
 			}
 		}
 		graph.setNodes(nodes);
 
-		Graph dijkstra = calculateShortestPathFromSource(graph, tempNodes.get(start[0]).get(start[1]));
-
+		Graph dijkstra = calculateShortestPathFromSource(graph, nodesMatrix.get(start[0]).get(start[1]));
 		Node endNode = new Node("");
-		// find the end node
 		for (Node n : dijkstra.getNodes()) {
 			if (n.getName().equals(end[0] + "," + end[1])) {
 				endNode = n;
@@ -125,30 +125,32 @@ public class Day12 {
 
 		// transform matrix into a graph
 		Graph graph = new Graph();
-		List<List<Node>> tempNodes = new ArrayList<>();
+		Set<Node> nodes = new HashSet<>();
+		List<List<Node>> nodesMatrix = new ArrayList<>();
 		for (int i = 0; i < matrix.size(); i++) {
-			List<Node> tempNodesRow = new ArrayList<>();
+			List<Node> nodesMatrixRow = new ArrayList<>();
 			for (int j = 0; j < matrix.get(0).size(); j++) {
 				Node node = new Node(i + "," + j);
-				tempNodesRow.add(node);
+				nodesMatrixRow.add(node);
 			}
-			tempNodes.add(tempNodesRow);
+			nodesMatrix.add(nodesMatrixRow);
 		}
-		Set<Node> nodes = new HashSet<>();
+
+		// assemble adjacencies
 		for (int i = 0; i < matrix.size(); i++) {
 			for (int j = 0; j < matrix.get(0).size(); j++) {
-				Node node = tempNodes.get(i).get(j);
+				Node node = nodesMatrix.get(i).get(j);
 				if (i > 0 && matrix.get(i - 1).get(j) - matrix.get(i).get(j) <= 1) {
-					node.getAdjacentNodes().put(tempNodes.get(i - 1).get(j), 1);
+					node.getAdjacentNodes().put(nodesMatrix.get(i - 1).get(j), 1);
 				}
 				if (j > 0 && matrix.get(i).get(j - 1) - matrix.get(i).get(j) <= 1) {
-					node.getAdjacentNodes().put(tempNodes.get(i).get(j - 1), 1);
+					node.getAdjacentNodes().put(nodesMatrix.get(i).get(j - 1), 1);
 				}
 				if (i < matrix.size() - 1 && matrix.get(i + 1).get(j) - matrix.get(i).get(j) <= 1) {
-					node.getAdjacentNodes().put(tempNodes.get(i + 1).get(j), 1);
+					node.getAdjacentNodes().put(nodesMatrix.get(i + 1).get(j), 1);
 				}
 				if (j < matrix.get(0).size() - 1 && matrix.get(i).get(j + 1) - matrix.get(i).get(j) <= 1) {
-					node.getAdjacentNodes().put(tempNodes.get(i).get(j + 1), 1);
+					node.getAdjacentNodes().put(nodesMatrix.get(i).get(j + 1), 1);
 				}
 				nodes.add(node);
 			}
@@ -156,11 +158,9 @@ public class Day12 {
 		graph.setNodes(nodes);
 
 		int shortestDistance = Integer.MAX_VALUE;
-
 		for (int[] start : starts) {
-			Graph dijkstra = calculateShortestPathFromSource(graph, tempNodes.get(start[0]).get(start[1]));
+			Graph dijkstra = calculateShortestPathFromSource(graph, nodesMatrix.get(start[0]).get(start[1]));
 			Node endNode = new Node("");
-			// find the end node
 			for (Node n : dijkstra.getNodes()) {
 				if (n.getName().equals(end[0] + "," + end[1])) {
 					endNode = n;
