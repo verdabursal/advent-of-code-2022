@@ -213,8 +213,7 @@ public class Day12 {
 		return lowestDistanceNode;
 	}
 
-	void calculateMinimumDistance(Node evaluationNode,
-								  Integer edgeWeigh, Node sourceNode) {
+	void calculateMinimumDistance(Node evaluationNode, Integer edgeWeigh, Node sourceNode) {
 		Integer sourceDistance = sourceNode.getDistance();
 		if (sourceDistance + edgeWeigh < evaluationNode.getDistance()) {
 			evaluationNode.setDistance(sourceDistance + edgeWeigh);
@@ -226,7 +225,6 @@ public class Day12 {
 }
 
 class Graph {
-
 	private Set<Node> nodes = new HashSet<>();
 
 	public void addNode(Node nodeA) {
@@ -243,7 +241,6 @@ class Graph {
 }
 
 class Node {
-
 	private String name;
 
 	private List<Node> shortestPath = new LinkedList<>();
