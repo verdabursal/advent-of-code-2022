@@ -29,9 +29,6 @@ public class Day10 {
 						if (cycleNumber % 40 == 20) {
 							int signalStrength = cycleNumber * x;
 							signalStrengthSum += signalStrength;
-							System.out.println("cycleNumber: " + cycleNumber);
-							System.out.println(signalStrength);
-							System.out.println(signalStrengthSum);
 						}
 						if (i == addx.cycles - 1) {
 							x += amount;
